@@ -51,31 +51,6 @@ if enableLPF
     release(LPF);
 end
 
-enablePA = true; % Enable power amplifier model
-if enablePA
-    backoff = 6; 
-    impariredWaveform = db2mag(-backoff)*impariredWaveform; % Apply PA backoff
-    visualizeAMAMCharacteristic(@paMemorylessGaN,"GaN");
-    
-    impariredWaveform = paMemorylessGaN(impariredWaveform);    
-end
-
-% Custom AM/AM Visualization
-function visualizeAMAMCharacteristic(signal)
-    inputPower = abs(signal).^2; 
-    outputPower = abs(signal).^2; 
-
-    inputPowerDB = 10*log10(inputPower);
-    outputPowerDB = 10*log10(outputPower);
-
-    figure;
-    plot(inputPowerDB, outputPowerDB);
-    xlabel('Input Power (dBm)');
-    ylabel('Output Power (dBm)');
-    title('AM/AM Characteristic of Power Amplifier');
-    grid on;
-end
-
 %% Measure ACPR
 
 % Measure the ACPR to study spectral regrowth caused by the nonlinear PA model.
